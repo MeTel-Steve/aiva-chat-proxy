@@ -32,7 +32,6 @@ export default async function handler(request) {
       });
     }
 
-    // Call Vapi using your private key stored in Vercel env vars
     const r = await fetch("https://api.vapi.ai/chat", {
       method: "POST",
       headers: {
