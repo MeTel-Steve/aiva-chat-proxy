@@ -1,11 +1,12 @@
 {
   "headers": [
     {
-      "source": "/api/vapi-chat",
+      "source": "/api/(.*)",
       "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Origin", "value": "https://getmetel.com" },
         { "key": "Access-Control-Allow-Methods", "value": "POST, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" },
+        { "key": "Vary", "value": "Origin" }
       ]
     }
   ]
