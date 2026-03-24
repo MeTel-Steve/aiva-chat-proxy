@@ -1,14 +1,29 @@
-export default async function handler(req, res) {
-  // CORS so your website can call this endpoint
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+const cors = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
 
-  if (req.method === "OPTIONS") return res.status(200).send("");
-  if (req.method !== "POST") return res.status(405).json({ error: "Use POST" });
+export default async function handler(req, res) {
+  // Always set CORS headers
+  for (const [k, v] of Object.entries(cors)) res.setHeader(k, v);
+
+  if (req.method === "OPTIONS") {
+    return res.status(204).send("");
+  }
+
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Use POST" });
+  }
 
   try {
-    const { assistantId, input, previousChatId } = req.body || {};
+    const body =
+      typeof req.body === "object" && req.body !== null
+        ? req.body
+        : JSON.parse(req.body || "{}");
+
+    const { assistantId, input, previousChatId } = body;
+
     if (!assistantId || !input) {
       return res.status(400).json({ error: "Missing assistantId or input" });
     }
